@@ -1,0 +1,26 @@
+version: '3'
+volumes:
+        MV:
+        GV:
+services:
+        db:
+                image: mysql:5.7
+                restart: always
+                volumes:
+                        - MV:/var/lib/mysql
+                environment:
+                        MYSQL_ROOT_PASSWORD: rootcd
+        GHOST:
+                image: ghost:latest
+                restart: always
+                ports:
+                        - 8084:2368
+                volumes:
+                        - GV:/var/lib/ghost/content
+                environment:
+                        database__client: mysql
+                        database__connection__host: db
+                        database__connection__user: root
+                        database__connection__password: rootcd
+                        database__connection__database: ghost
+
